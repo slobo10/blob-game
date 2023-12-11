@@ -8,6 +8,13 @@ let GameContext: Context<GameContextType | undefined> =
 const Game: React.FC = () => {
   let GameContextValue: { current: GameContextType } = useRef({
     gameSvgDimensions: [500, 500],
+    blobs: [
+      {
+        position: [250, 250],
+        size: 50,
+        color: [0, 255, 0],
+      },
+    ],
   });
 
   return (
