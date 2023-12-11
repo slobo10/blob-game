@@ -1,6 +1,7 @@
 import React, { Context, createContext, useRef } from "react";
 import { Svg } from "react-native-svg";
 import { GameContextType } from "../constants/types";
+import styles from "../constants/styles";
 
 let GameContext: Context<GameContextType | undefined> =
   createContext(undefined);
@@ -20,6 +21,7 @@ const Game: React.FC = () => {
   return (
     <GameContext.Provider value={GameContextValue.current}>
       <Svg
+        style={styles.gameSvg}
         width={GameContextValue.current.gameSvgDimensions[0]}
         height={GameContextValue.current.gameSvgDimensions[1]}
       ></Svg>
