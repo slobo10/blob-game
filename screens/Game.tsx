@@ -1,11 +1,23 @@
-import React from "react";
+import React, { Context, createContext, useRef } from "react";
 import { Svg } from "react-native-svg";
+import { GameContextType } from "../constants/types";
 
-const Game: React.FC<{ width: number; height: number }> = ({
-  width,
-  height,
-}) => {
-  return <Svg width={width} height={height}></Svg>;
+let GameContext: Context<GameContextType | undefined> =
+  createContext(undefined);
+
+const Game: React.FC = () => {
+  let GameContextValue: { current: GameContextType } = useRef({
+    gameSvgDimensions: [500, 500],
+  });
+
+  return (
+    <GameContext.Provider value={GameContextValue.current}>
+      <Svg
+        width={GameContextValue.current.gameSvgDimensions[0]}
+        height={GameContextValue.current.gameSvgDimensions[1]}
+      ></Svg>
+    </GameContext.Provider>
+  );
 };
 
 export default Game;

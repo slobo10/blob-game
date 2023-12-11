@@ -7,7 +7,7 @@ import styles from "./constants/styles";
 const App: React.FC = () => {
   return (
     <View style={styles.appContainer}>
-      <Game width={500} height={500} />
+      <Game />
       <StatusBar style="auto" />
     </View>
   );
