@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import Game from "./screens/Game";
 
 const App: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text>Game's not ready yet!</Text>
+      <Game width={500} height={500} />
       <StatusBar style="auto" />
     </View>
   );
