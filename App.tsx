@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Game from "./screens/Game";
+import styles from "./contants/styles";
 
 const App: React.FC = () => {
   return (
-    <View style={styles.container}>
+    <View style={styles.appContainer}>
       <Game width={500} height={500} />
       <StatusBar style="auto" />
     </View>
@@ -13,12 +14,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
