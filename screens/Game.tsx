@@ -30,3 +30,5 @@ const Game: React.FC = () => {
 };
 
 export default Game;
+
+export { GameContext };
