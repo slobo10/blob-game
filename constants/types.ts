@@ -1,10 +1,12 @@
+type blobType = {
+  position: [number, number];
+  size: number;
+  color: [number, number, number];
+};
+
 type GameContextType = {
   gameSvgDimensions: [number, number];
-  blobs: {
-    position: [number, number];
-    size: number;
-    color: [number, number, number];
-  }[];
+  blobs: blobType[];
 };
 
 export { GameContextType };
