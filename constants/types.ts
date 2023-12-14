@@ -9,4 +9,4 @@ type GameContextType = {
   blobs: blobType[];
 };
 
-export { GameContextType };
+export { GameContextType, blobType };
