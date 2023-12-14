@@ -14,7 +14,11 @@ const Game: React.FC = () => {
       {
         position: [250, 250],
         size: 50,
-        color: [0, 255, 0],
+        color: [
+          Math.floor(Math.random() * 255),
+          Math.floor(Math.random() * 255),
+          Math.floor(Math.random() * 255),
+        ],
       },
     ],
   });
