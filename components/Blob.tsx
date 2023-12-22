@@ -80,6 +80,8 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
     }
   }
 
+  console.log("Blob " + id + " rendered!");
+
   return (
     <Circle
       cx={GameContextValue.current.blobs[id].position[0]}

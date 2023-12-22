@@ -30,6 +30,8 @@ const Game: React.FC = () => {
     blobOutput.push(<Blob id={i} />);
   }
 
+  console.log("Game rendered!");
+
   return (
     <GameContext.Provider value={GameContextValue.current}>
       <Svg
