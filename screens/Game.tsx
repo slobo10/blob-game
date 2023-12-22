@@ -1,4 +1,9 @@
-import React, { Context, createContext, useRef } from "react";
+import React, {
+  Context,
+  createContext,
+  useEffect,
+  useRef
+} from "react";
 import { Svg } from "react-native-svg";
 import { GameContextType } from "../constants/types";
 import styles from "../constants/styles";
@@ -21,10 +26,22 @@ const Game: React.FC = () => {
         ],
       },
     ],
+    frameRate: 100,
+    updateFunctions: [],
   });
 
   let blobOutput: React.JSX.Element[] = [];
   let i: number;
+
+  useEffect(() => {
+    setInterval(() => {
+      let i: number;
+
+      for (i = 0; i < GameContextValue.current.updateFunctions.length; i++) {
+        GameContextValue.current.updateFunctions[i]();
+      }
+    }, 1000 / GameContextValue.current.frameRate);
+  }, []);
 
   for (i = 0; i < GameContextValue.current.blobs.length; i++) {
     blobOutput.push(<Blob id={i} />);

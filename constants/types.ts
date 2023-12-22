@@ -7,6 +7,8 @@ type blobType = {
 type GameContextType = {
   gameSvgDimensions: [number, number];
   blobs: blobType[];
+  frameRate: number;
+  updateFunctions: (() => void)[];
 };
 
 export { GameContextType, blobType };
