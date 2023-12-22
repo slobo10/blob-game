@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   gameSvg: {
-    backgroundColor: "grey",
+    backgroundColor: "#008000",
     borderStyle: "solid",
     borderColor: "black",
     borderWidth: 5,
