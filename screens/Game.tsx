@@ -24,8 +24,10 @@ const Game: React.FC = () => {
           Math.floor(Math.random() * 255),
           Math.floor(Math.random() * 255),
         ],
+        playerControlled: true
       },
     ],
+    blobSpeed: 10000,
     keyDownEventHandlers: [],
     keyUpEventHandlers: [],
     frameRate: 100,
