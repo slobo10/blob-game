@@ -26,6 +26,8 @@ const Game: React.FC = () => {
         ],
       },
     ],
+    keyDownEventHandlers: [],
+    keyUpEventHandlers: [],
     frameRate: 100,
     updateFunctions: [],
   });
@@ -34,6 +36,26 @@ const Game: React.FC = () => {
   let i: number;
 
   useEffect(() => {
+    document.addEventListener("keydown", ({ key }: { key: string }) => {
+      let i: number;
+
+      for (
+        i = 0;
+        i < GameContextValue.current.keyDownEventHandlers.length;
+        i++
+      ) {
+        GameContextValue.current.keyDownEventHandlers[i](key);
+      }
+    });
+
+    document.addEventListener("keyup", ({ key }: { key: string }) => {
+      let i: number;
+
+      for (i = 0; i < GameContextValue.current.keyUpEventHandlers.length; i++) {
+        GameContextValue.current.keyUpEventHandlers[i](key);
+      }
+    });
+
     setInterval(() => {
       let i: number;
 

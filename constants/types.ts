@@ -7,6 +7,8 @@ type blobType = {
 type GameContextType = {
   gameSvgDimensions: [number, number];
   blobs: blobType[];
+  keyDownEventHandlers: ((key: string) => void)[];
+  keyUpEventHandlers: ((key: string) => void)[];
   frameRate: number;
   updateFunctions: (() => void)[];
 };
