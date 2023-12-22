@@ -1,9 +1,13 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Circle } from "react-native-svg";
 import { GameContextType } from "../constants/types";
 import { GameContext } from "../screens/Game";
 
 const Blob: React.FC<{ id: number }> = ({ id }) => {
+  let [thisBlob, setThisBlob]: [blobType, Function] = useState({
+    ...useContext(GameContext).blobs[id],
+  });
+
   let GameContextValue: { current: GameContextType } = useRef(
     useContext(GameContext)
   );
@@ -84,9 +88,9 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <Circle
-      cx={GameContextValue.current.blobs[id].position[0]}
-      cy={GameContextValue.current.blobs[id].position[1]}
-      r={GameContextValue.current.blobs[id].size}
+      cx={thisBlob.position[0]}
+      cy={thisBlob.position[1]}
+      r={thisBlob.size}
       fill={fillColor}
     />
   );
