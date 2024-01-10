@@ -39,6 +39,19 @@ const Game: React.FC = () => {
 
   let GameContextValue: { current: GameContextType } = useRef({
     gameSvgDimensions: [500, 500],
+    positionOffset: [0, 0],
+    changePositionOffset: () => {
+      let i: number;
+
+      for (
+        i = 0;
+        i < GameContextValue.current.changePositionOffsetFunctions.length;
+        i++
+      ) {
+        GameContextValue.current.changePositionOffsetFunctions[i]();
+      }
+    },
+    changePositionOffsetFunctions: [],
     blobs: [...blobs],
     changeNumberOfBlobs: () => {
       console.log("Number of blobs changed!");
@@ -55,6 +68,19 @@ const Game: React.FC = () => {
   let i: number;
 
   useEffect(() => {
+    GameContextValue.current.positionOffset = [
+      GameContextValue.current.blobs.filter(
+        (item: blobType) => item.playerControlled
+      )[0].position[0] -
+        GameContextValue.current.gameSvgDimensions[0] / 2,
+      GameContextValue.current.blobs.filter(
+        (item: blobType) => item.playerControlled
+      )[0].position[1] -
+        GameContextValue.current.gameSvgDimensions[1] / 2,
+    ];
+
+    GameContextValue.current.changePositionOffset(); //TODO: Prevent blobs from double rendering when game initializes
+
     document.addEventListener("keydown", ({ key }: { key: string }) => {
       let i: number;
 

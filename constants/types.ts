@@ -8,6 +8,9 @@ type blobType = {
 
 type GameContextType = {
   gameSvgDimensions: [number, number];
+  positionOffset: [number, number];
+  changePositionOffset: Function;
+  changePositionOffsetFunctions: (() => void)[];
   blobs: blobType[];
   changeNumberOfBlobs: Function;
   blobSpeed: number;
