@@ -41,6 +41,7 @@ const Game: React.FC = () => {
     gameSvgDimensions: [500, 500],
     blobs: [...blobs],
     changeNumberOfBlobs: () => {
+      console.log("Number of blobs changed!");
       setBlobs([...GameContextValue.current.blobs]);
     },
     blobSpeed: 10000,
