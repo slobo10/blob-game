@@ -54,7 +54,6 @@ const Game: React.FC = () => {
   let blobOutput: React.JSX.Element[] = [];
   let i: number;
 
-  //TODO: Do the key event and such
   useEffect(() => {
     document.addEventListener("keydown", ({ key }: { key: string }) => {
       let i: number;
