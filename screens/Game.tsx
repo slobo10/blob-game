@@ -82,13 +82,13 @@ const Game: React.FC = () => {
 
       for (i = 0; i < GameContextValue.current.blobs.length; i++) {
         for (j = i; j < GameContextValue.current.blobs.length; j++) {
-          FirstBlobIsBigger =
-            GameContextValue.current.blobs[i].size >
-            GameContextValue.current.blobs[j].size;
-
           if (i === j) {
             continue;
           }
+
+          FirstBlobIsBigger =
+            GameContextValue.current.blobs[i].size >
+            GameContextValue.current.blobs[j].size;
 
           if (
             Math.sqrt(
