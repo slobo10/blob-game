@@ -7,6 +7,8 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
   let [thisBlob, setThisBlob]: [blobType, Function] = useState({
     ...useContext(GameContext).blobs[id],
   });
+  let [positionOffset, setPositionOffset]: [[number, number], Function] =
+    useState([...useContext(GameContext).positionOffset]);
 
   let GameContextValue: { current: GameContextType } = useRef(
     useContext(GameContext)
@@ -52,6 +54,10 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
       });
     }
 
+    GameContextValue.current.changePositionOffsetFunctions.push(() => {
+      setPositionOffset([...GameContextValue.current.positionOffset]);
+    });
+
     GameContextValue.current.updateFunctions.push(() => {
       thisBlob.position[0] +=
         xSpeed.current / GameContextValue.current.frameRate;
@@ -63,6 +69,16 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
           ...oldBlob,
           position: [thisBlob.position[0], thisBlob.position[1]],
         }));
+        if (thisBlob.playerControlled) {
+          //TODO: Look for a better place for this if statement
+          GameContextValue.current.positionOffset = [
+            thisBlob.position[0] -
+              GameContextValue.current.gameSvgDimensions[0] / 2,
+            thisBlob.position[1] -
+              GameContextValue.current.gameSvgDimensions[1] / 2,
+          ];
+          GameContextValue.current.changePositionOffset(); //TODO: Prevent player-controlled blob from needlessly rerendering
+        }
       }
     });
   }, []);
@@ -143,8 +159,8 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <Circle
-      cx={thisBlob.position[0]}
-      cy={thisBlob.position[1]}
+      cx={thisBlob.position[0] - positionOffset[0]}
+      cy={thisBlob.position[1] - positionOffset[1]}
       r={thisBlob.size}
       fill={fillColor}
     />
