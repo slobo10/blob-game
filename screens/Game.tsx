@@ -9,7 +9,7 @@ import { Svg } from "react-native-svg";
 import { GameContextType, blobType } from "../constants/types";
 import styles from "../constants/styles";
 import Blob from "../components/Blob";
-import { randomColor } from "../lib/mathLib";
+import { average, randomColor } from "../lib/mathLib";
 
 let GameContext: Context<GameContextType | undefined> =
   createContext(undefined);
@@ -78,6 +78,7 @@ const Game: React.FC = () => {
     GameContextValue.current.updateFunctions.push(() => {
       let i: number;
       let j: number;
+      let k: number;
       let FirstBlobIsBigger: boolean;
 
       for (i = 0; i < GameContextValue.current.blobs.length; i++) {
@@ -110,6 +111,16 @@ const Game: React.FC = () => {
                 GameContextValue.current.blobs[i].size ** 2 +
                   GameContextValue.current.blobs[j].size ** 2
               );
+              for (k = 0; k < 3; k++) {
+                GameContextValue.current.blobs[i].color[k] = Math.round(
+                  average(
+                    GameContextValue.current.blobs[i].color[k],
+                    GameContextValue.current.blobs[j].color[k],
+                    GameContextValue.current.blobs[i].size,
+                    GameContextValue.current.blobs[i].size
+                  )
+                );
+              }
               GameContextValue.current.blobs.splice(j, 1);
               j--;
             } else {
@@ -117,6 +128,16 @@ const Game: React.FC = () => {
                 GameContextValue.current.blobs[j].size ** 2 +
                   GameContextValue.current.blobs[i].size ** 2
               );
+              for (k = 0; k < 3; k++) {
+                GameContextValue.current.blobs[j].color[k] = Math.round(
+                  average(
+                    GameContextValue.current.blobs[i].color[k],
+                    GameContextValue.current.blobs[j].color[k],
+                    GameContextValue.current.blobs[i].size,
+                    GameContextValue.current.blobs[i].size
+                  )
+                );
+              }
               GameContextValue.current.blobs.splice(i, 1);
               i--;
             }
