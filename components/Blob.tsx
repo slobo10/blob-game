@@ -155,7 +155,11 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
     }
   }
 
-  console.log("Blob " + id + " rendered!");
+  console.log(
+    thisBlob.id[0].toUpperCase() +
+      thisBlob.id.slice(1, thisBlob.id.length) +
+      " rendered!"
+  );
 
   return (
     <Circle
