@@ -136,6 +136,8 @@ const Game: React.FC = () => {
     }, 1000 / GameContextValue.current.frameRate);
   }, []);
 
+  GameContextValue.current.blobs.sort((a, b) => a.size - b.size);
+
   for (i = 0; i < GameContextValue.current.blobs.length; i++) {
     blobOutput.push(<Blob key={GameContextValue.current.blobs[i].id} id={i} />);
   }
