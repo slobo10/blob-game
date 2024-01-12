@@ -69,6 +69,7 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
           ...oldBlob,
           position: [thisBlob.position[0], thisBlob.position[1]],
         }));
+
         if (thisBlob.playerControlled) {
           //TODO: Look for a better place for this if statement
           GameContextValue.current.positionOffset = [
@@ -77,6 +78,7 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
             thisBlob.position[1] -
               GameContextValue.current.gameSvgDimensions[1] / 2,
           ];
+
           GameContextValue.current.changePositionOffset(); //TODO: Prevent player-controlled blob from needlessly rerendering
         }
       }

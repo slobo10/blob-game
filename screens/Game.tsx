@@ -137,6 +137,7 @@ const Game: React.FC = () => {
                 GameContextValue.current.blobs[i].size ** 2 +
                   GameContextValue.current.blobs[j].size ** 2
               );
+
               for (k = 0; k < 3; k++) {
                 GameContextValue.current.blobs[i].color[k] = Math.round(
                   average(
@@ -154,6 +155,7 @@ const Game: React.FC = () => {
                 GameContextValue.current.blobs[j].size ** 2 +
                   GameContextValue.current.blobs[i].size ** 2
               );
+
               for (k = 0; k < 3; k++) {
                 GameContextValue.current.blobs[j].color[k] = Math.round(
                   average(
