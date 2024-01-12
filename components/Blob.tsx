@@ -58,40 +58,41 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
 
     GameContextValue.current.updateFunctions.push(() => {
       if (xSpeed.current != 0 || ySpeed.current != 0) {
-        thisBlob.position[0] +=
-          (xSpeed.current * GameContextValue.current.blobSpeed) /
-          Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
-          thisBlob.size /
-          GameContextValue.current.frameRate;
-
-        thisBlob.position[1] +=
-          (ySpeed.current * GameContextValue.current.blobSpeed) /
-          Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
-          thisBlob.size /
-          GameContextValue.current.frameRate;
-
-        setThisBlob((oldBlob: blobType) => ({
-          ...oldBlob,
-          position: [thisBlob.position[0], thisBlob.position[1]],
-        }));
-
-        if (thisBlob.playerControlled) {
-          //TODO: Look for a better place for this if statement
-          GameContextValue.current.positionOffset = [
-            thisBlob.position[0] -
-              GameContextValue.current.gameSvgDimensions[0] / 2,
-            thisBlob.position[1] -
-              GameContextValue.current.gameSvgDimensions[1] / 2,
-          ];
-
-          GameContextValue.current.changePositionOffset(); //TODO: Prevent player-controlled blob from needlessly rerendering
-        }
+        setThisBlob((oldBlob: blobType) => {
+          return {
+            ...oldBlob,
+            position: [
+              oldBlob.position[0] +
+                (xSpeed.current * GameContextValue.current.blobSpeed) /
+                  Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
+                  thisBlob.size /
+                  GameContextValue.current.frameRate,
+              oldBlob.position[1] +
+                (ySpeed.current * GameContextValue.current.blobSpeed) /
+                  Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
+                  thisBlob.size /
+                  GameContextValue.current.frameRate,
+            ],
+          };
+        });
       }
     });
   }, []);
   useEffect(() => {
     GameContextValue.current.blobs[id] = thisBlob;
   }, [thisBlob]);
+  if (thisBlob.playerControlled) {
+    useEffect(() => {
+      GameContextValue.current.positionOffset = [
+        thisBlob.position[0] -
+          GameContextValue.current.gameSvgDimensions[0] / 2,
+        thisBlob.position[1] -
+          GameContextValue.current.gameSvgDimensions[1] / 2,
+      ];
+
+      GameContextValue.current.changePositionOffset(); //TODO: Prevent player-controlled blob from needlessly rerendering
+    }, [thisBlob.position]);
+  }
 
   for (i = 0; i < GameContextValue.current.blobs[id].color.length; i++) {
     let colorCharacterNumber: number = Math.floor(
