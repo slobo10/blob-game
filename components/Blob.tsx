@@ -24,21 +24,19 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
       GameContextValue.current.keyDownEventHandlers.push((key: string) => {
         switch (key.toUpperCase()) {
           case "W": {
-            ySpeed.current =
-              -GameContextValue.current.blobSpeed / thisBlob.size;
+            ySpeed.current = -1;
             break;
           }
           case "A": {
-            xSpeed.current =
-              -GameContextValue.current.blobSpeed / thisBlob.size;
+            xSpeed.current = -1;
             break;
           }
           case "S": {
-            ySpeed.current = GameContextValue.current.blobSpeed / thisBlob.size;
+            ySpeed.current = 1;
             break;
           }
           case "D": {
-            xSpeed.current = GameContextValue.current.blobSpeed / thisBlob.size;
+            xSpeed.current = 1;
             break;
           }
         }
@@ -59,12 +57,19 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
     });
 
     GameContextValue.current.updateFunctions.push(() => {
-      thisBlob.position[0] +=
-        xSpeed.current / GameContextValue.current.frameRate;
-      thisBlob.position[1] +=
-        ySpeed.current / GameContextValue.current.frameRate;
-
       if (xSpeed.current != 0 || ySpeed.current != 0) {
+        thisBlob.position[0] +=
+          (xSpeed.current * GameContextValue.current.blobSpeed) /
+          Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
+          thisBlob.size /
+          GameContextValue.current.frameRate;
+
+        thisBlob.position[1] +=
+          (ySpeed.current * GameContextValue.current.blobSpeed) /
+          Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
+          thisBlob.size /
+          GameContextValue.current.frameRate;
+
         setThisBlob((oldBlob: blobType) => ({
           ...oldBlob,
           position: [thisBlob.position[0], thisBlob.position[1]],
