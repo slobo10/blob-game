@@ -54,7 +54,6 @@ const Game: React.FC = () => {
     changePositionOffsetFunctions: [],
     blobs: [...blobs],
     changeNumberOfBlobs: () => {
-      console.log("Number of blobs changed!");
       setBlobs([...GameContextValue.current.blobs]);
     },
     blobSpeed: 10000,
@@ -189,8 +188,6 @@ const Game: React.FC = () => {
   for (i = 0; i < GameContextValue.current.blobs.length; i++) {
     blobOutput.push(<Blob key={GameContextValue.current.blobs[i].id} id={i} />);
   }
-
-  console.log("Game rendered!");
 
   return (
     <GameContext.Provider value={GameContextValue.current}>

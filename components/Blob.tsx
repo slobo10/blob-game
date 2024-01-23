@@ -94,12 +94,6 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
 
   const fillColor: string = RGBtoString(thisBlob.color);
 
-  console.log(
-    thisBlob.id[0].toUpperCase() +
-      thisBlob.id.slice(1, thisBlob.id.length) +
-      " rendered!"
-  );
-
   return (
     <Circle
       cx={thisBlob.position[0] - positionOffset[0]}
