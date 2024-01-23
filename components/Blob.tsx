@@ -48,6 +48,11 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
           xSpeed.current = 0;
         }
       });
+    } else {
+      GameContextValue.current.updateFunctions.push(() => {
+        xSpeed.current += Math.random() * 2 - 1;
+        ySpeed.current += Math.random() * 2 - 1;
+      });
     }
 
     GameContextValue.current.changePositionOffsetFunctions.push(() => {
