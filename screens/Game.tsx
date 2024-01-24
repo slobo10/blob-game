@@ -30,15 +30,16 @@ const Game: React.FC = () => {
     },
   ]);
   let [playerBlob, setPlayerBlob]: [blobType, Function] = useState({
-    position: [175, 250],
+    position: [500, 250],
     size: 50,
-    color: [255, 0, 0],
+    color: randomColor(),
     id: "playerBlob",
   });
   let [playerAlive, setPlayerState]: [boolean, Function] = useState(true);
 
   let GameContextValue: { current: GameContextType } = useRef({
     gameSvgDimensions: [500, 500],
+    gameDimensions: [3200, 3200],
     positionOffset: [0, 0],
     changePositionOffset: () => {
       let i: number;

@@ -64,20 +64,54 @@ const Blob: React.FC<{ id: number | "player" }> = ({ id }) => {
     GameContextValue.current.updateFunctions.push(() => {
       if (xSpeed.current != 0 || ySpeed.current != 0) {
         setThisBlob((oldBlob: blobType) => {
+          let newPosition: [number, number] = [
+            oldBlob.position[0] +
+              (xSpeed.current * GameContextValue.current.blobSpeed) /
+                Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
+                oldBlob.size /
+                GameContextValue.current.frameRate,
+            oldBlob.position[1] +
+              (ySpeed.current * GameContextValue.current.blobSpeed) /
+                Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
+                oldBlob.size /
+                GameContextValue.current.frameRate,
+          ];
+
+          if (newPosition[0] < oldBlob.size) {
+            newPosition[0] = oldBlob.size;
+            if (id !== "player") {
+              xSpeed.current *= -1;
+            }
+          } else if (
+            newPosition[0] >
+            GameContextValue.current.gameDimensions[0] - oldBlob.size
+          ) {
+            newPosition[0] =
+              GameContextValue.current.gameDimensions[0] - oldBlob.size;
+            if (id !== "player") {
+              xSpeed.current *= -1;
+            }
+          }
+
+          if (newPosition[1] < oldBlob.size) {
+            newPosition[1] = oldBlob.size;
+            if (id !== "player") {
+              ySpeed.current *= -1;
+            }
+          } else if (
+            newPosition[1] >
+            GameContextValue.current.gameDimensions[1] - oldBlob.size
+          ) {
+            newPosition[1] =
+              GameContextValue.current.gameDimensions[1] - oldBlob.size;
+            if (id !== "player") {
+              ySpeed.current *= -1;
+            }
+          }
+
           return {
             ...oldBlob,
-            position: [
-              oldBlob.position[0] +
-                (xSpeed.current * GameContextValue.current.blobSpeed) /
-                  Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
-                  thisBlob.size /
-                  GameContextValue.current.frameRate,
-              oldBlob.position[1] +
-                (ySpeed.current * GameContextValue.current.blobSpeed) /
-                  Math.sqrt(xSpeed.current ** 2 + ySpeed.current ** 2) /
-                  thisBlob.size /
-                  GameContextValue.current.frameRate,
-            ],
+            position: newPosition,
           };
         });
       }
@@ -94,6 +128,30 @@ const Blob: React.FC<{ id: number | "player" }> = ({ id }) => {
         thisBlob.position[1] -
           GameContextValue.current.gameSvgDimensions[1] / 2,
       ];
+
+      if (GameContextValue.current.positionOffset[0] < 0) {
+        GameContextValue.current.positionOffset[0] = 0;
+      } else if (
+        GameContextValue.current.positionOffset[0] >
+        GameContextValue.current.gameDimensions[0] -
+          GameContextValue.current.gameSvgDimensions[0]
+      ) {
+        GameContextValue.current.positionOffset[0] =
+          GameContextValue.current.gameDimensions[0] -
+          GameContextValue.current.gameSvgDimensions[0];
+      }
+
+      if (GameContextValue.current.positionOffset[1] < 0) {
+        GameContextValue.current.positionOffset[1] = 0;
+      } else if (
+        GameContextValue.current.positionOffset[1] >
+        GameContextValue.current.gameDimensions[1] -
+          GameContextValue.current.gameSvgDimensions[1]
+      ) {
+        GameContextValue.current.positionOffset[1] =
+          GameContextValue.current.gameDimensions[1] -
+          GameContextValue.current.gameSvgDimensions[1];
+      }
 
       GameContextValue.current.changePositionOffset(); //TODO: Prevent player-controlled blob from needlessly rerendering
     }, [thisBlob.position]);
