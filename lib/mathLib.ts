@@ -1,3 +1,5 @@
+import { blobType } from "../constants/types";
+
 const randomColor: () => [number, number, number] = () => {
   return [
     Math.floor(Math.random() * 255),
@@ -90,4 +92,28 @@ const average: (
   }
 };
 
-export { randomColor, RGBtoString, average };
+const blobsAreTouching: (
+  blobA: blobType,
+  blobB: blobType,
+  firstIsEaten: () => void,
+  secondIsEaten: () => void
+) => void = (blobA, blobB, firstIsEaten, secondIsEaten) => {
+  let FirstBlobIsBigger = blobA.size > blobB.size;
+
+  let k: number;
+
+  if (
+    Math.sqrt(
+      (blobA.position[0] - blobB.position[0]) ** 2 +
+        (blobA.position[1] - blobB.position[1]) ** 2
+    ) <= (FirstBlobIsBigger ? blobA.size - blobB.size : blobB.size - blobA.size)
+  ) {
+    if (FirstBlobIsBigger) {
+      firstIsEaten();
+    } else {
+      secondIsEaten();
+    }
+  }
+};
+
+export { randomColor, RGBtoString, average, blobsAreTouching };
