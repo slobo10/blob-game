@@ -54,7 +54,8 @@ const Game: React.FC = () => {
     updateFunctions: [],
   });
 
-  let blobOutput: React.JSX.Element[] = [];
+  let blobOutputA: React.JSX.Element[] = [];
+  let blobOutputB: React.JSX.Element[] = [];
   let i: number;
 
   useEffect(() => {
@@ -222,8 +223,21 @@ const Game: React.FC = () => {
 
   GameContextValue.current.blobs.sort((a, b) => a.size - b.size);
 
-  for (i = 0; i < GameContextValue.current.blobs.length; i++) {
-    blobOutput.push(<Blob key={GameContextValue.current.blobs[i].id} id={i} />);
+  for (
+    i = 0;
+    i < GameContextValue.current.blobs.length &&
+    GameContextValue.current.blobs[i].size <
+      GameContextValue.current.playerBlob.size;
+    i++
+  ) {
+    blobOutputA.push(
+      <Blob key={GameContextValue.current.blobs[i].id} id={i} />
+    );
+  }
+  for (; i < GameContextValue.current.blobs.length; i++) {
+    blobOutputB.push(
+      <Blob key={GameContextValue.current.blobs[i].id} id={i} />
+    );
   }
 
   return (
@@ -233,8 +247,9 @@ const Game: React.FC = () => {
         width={GameContextValue.current.gameSvgDimensions[0]}
         height={GameContextValue.current.gameSvgDimensions[1]}
       >
+        {blobOutputA}
         {playerAlive && <Blob id="player" />}
-        {blobOutput}
+        {blobOutputB}
       </Svg>
     </GameContext.Provider>
   );
