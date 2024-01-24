@@ -61,7 +61,7 @@ const Game: React.FC = () => {
   useEffect(() => {
     let i: number = 0;
 
-    for (i = 0; i < 250; i++) {
+    for (i = 0; i < 300; i++) {
       GameContextValue.current.blobs.push({
         position: [
           Math.random() * GameContextValue.current.gameDimensions[0],
