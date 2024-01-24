@@ -125,8 +125,8 @@ const Game: React.FC = () => {
                   average(
                     GameContextValue.current.blobs[i].color[k],
                     GameContextValue.current.playerBlob.color[k],
-                    GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.playerBlob.size
+                    GameContextValue.current.blobs[i].size ** 2 * Math.PI,
+                    GameContextValue.current.playerBlob.size ** 2 * Math.PI
                   )
                 );
               }
@@ -146,8 +146,8 @@ const Game: React.FC = () => {
                   average(
                     GameContextValue.current.blobs[i].color[k],
                     GameContextValue.current.playerBlob.color[k],
-                    GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.playerBlob.size
+                    GameContextValue.current.blobs[i].size ** 2 * Math.PI,
+                    GameContextValue.current.playerBlob.size ** 2 * Math.PI
                   )
                 );
               }
@@ -178,8 +178,8 @@ const Game: React.FC = () => {
                   average(
                     GameContextValue.current.blobs[i].color[k],
                     GameContextValue.current.blobs[j].color[k],
-                    GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.blobs[j].size
+                    GameContextValue.current.blobs[i].size ** 2 * Math.PI,
+                    GameContextValue.current.blobs[j].size ** 2 * Math.PI
                   )
                 );
               }
@@ -198,8 +198,8 @@ const Game: React.FC = () => {
                   average(
                     GameContextValue.current.blobs[i].color[k],
                     GameContextValue.current.blobs[j].color[k],
-                    GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.blobs[j].size
+                    GameContextValue.current.blobs[i].size ** 2 * Math.PI,
+                    GameContextValue.current.blobs[j].size ** 2 * Math.PI
                   )
                 );
               }
