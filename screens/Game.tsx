@@ -17,13 +17,6 @@ let GameContext: Context<GameContextType | undefined> =
 const Game: React.FC = () => {
   let [blobs, setBlobs]: [blobType[], Function] = useState([
     {
-      position: [175, 250],
-      size: 50,
-      color: randomColor(),
-      id: "playerBlob",
-      playerControlled: true,
-    },
-    {
       position: [325, 250],
       size: 60,
       color: randomColor(),
@@ -36,6 +29,13 @@ const Game: React.FC = () => {
       id: "unmannedBlob1",
     },
   ]);
+  let [playerBlob, setPlayerBlob]: [blobType, Function] = useState({
+    position: [175, 250],
+    size: 50,
+    color: [255, 0, 0],
+    id: "playerBlob",
+  });
+  let [playerAlive, setPlayerState]: [boolean, Function] = useState(true);
 
   let GameContextValue: { current: GameContextType } = useRef({
     gameSvgDimensions: [500, 500],
@@ -53,8 +53,10 @@ const Game: React.FC = () => {
     },
     changePositionOffsetFunctions: [],
     blobs: [...blobs],
+    playerBlob: { ...playerBlob },
     changeNumberOfBlobs: () => {
       setBlobs([...GameContextValue.current.blobs]);
+      setPlayerBlob({ ...GameContextValue.current.playerBlob });
     },
     blobSpeed: 10000,
     keyDownEventHandlers: [],
@@ -68,13 +70,9 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     GameContextValue.current.positionOffset = [
-      GameContextValue.current.blobs.filter(
-        (item: blobType) => item.playerControlled
-      )[0].position[0] -
+      GameContextValue.current.playerBlob.position[0] -
         GameContextValue.current.gameSvgDimensions[0] / 2,
-      GameContextValue.current.blobs.filter(
-        (item: blobType) => item.playerControlled
-      )[0].position[1] -
+      GameContextValue.current.playerBlob.position[1] -
         GameContextValue.current.gameSvgDimensions[1] / 2,
     ];
 
@@ -107,6 +105,68 @@ const Game: React.FC = () => {
       let FirstBlobIsBigger: boolean;
 
       for (i = 0; i < GameContextValue.current.blobs.length; i++) {
+        if (playerAlive) {
+          FirstBlobIsBigger =
+            GameContextValue.current.blobs[i].size >
+            GameContextValue.current.playerBlob.size;
+
+          if (
+            Math.sqrt(
+              (GameContextValue.current.blobs[i].position[0] -
+                GameContextValue.current.playerBlob.position[0]) **
+                2 +
+                (GameContextValue.current.blobs[i].position[1] -
+                  GameContextValue.current.playerBlob.position[1]) **
+                  2
+            ) <=
+            (FirstBlobIsBigger
+              ? GameContextValue.current.blobs[i].size -
+                GameContextValue.current.playerBlob.size
+              : GameContextValue.current.playerBlob.size -
+                GameContextValue.current.blobs[i].size)
+          ) {
+            if (FirstBlobIsBigger) {
+              GameContextValue.current.blobs[i].size = Math.sqrt(
+                GameContextValue.current.blobs[i].size ** 2 +
+                  GameContextValue.current.playerBlob.size ** 2
+              );
+
+              for (k = 0; k < 3; k++) {
+                GameContextValue.current.blobs[i].color[k] = Math.round(
+                  average(
+                    GameContextValue.current.blobs[i].color[k],
+                    GameContextValue.current.playerBlob.color[k],
+                    GameContextValue.current.blobs[i].size,
+                    GameContextValue.current.blobs[i].size
+                  )
+                );
+              }
+              playerAlive = false; //TODO: Fix this
+              setPlayerState(false); //You Died
+              j--;
+            } else {
+              GameContextValue.current.playerBlob.size = Math.sqrt(
+                GameContextValue.current.playerBlob.size ** 2 +
+                  GameContextValue.current.blobs[i].size ** 2
+              );
+
+              for (k = 0; k < 3; k++) {
+                GameContextValue.current.playerBlob.color[k] = Math.round(
+                  average(
+                    GameContextValue.current.blobs[i].color[k],
+                    GameContextValue.current.playerBlob.color[k],
+                    GameContextValue.current.blobs[i].size,
+                    GameContextValue.current.blobs[i].size
+                  )
+                );
+              }
+              GameContextValue.current.blobs.splice(i, 1);
+              i--;
+            }
+            GameContextValue.current.changeNumberOfBlobs();
+          }
+        }
+
         for (j = i; j < GameContextValue.current.blobs.length; j++) {
           if (i === j) {
             continue;
@@ -196,6 +256,7 @@ const Game: React.FC = () => {
         width={GameContextValue.current.gameSvgDimensions[0]}
         height={GameContextValue.current.gameSvgDimensions[1]}
       >
+        {playerAlive && <Blob id="player" />}
         {blobOutput}
       </Svg>
     </GameContext.Provider>

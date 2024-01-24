@@ -4,9 +4,11 @@ import { GameContextType, blobType } from "../constants/types";
 import { GameContext } from "../screens/Game";
 import { RGBtoString } from "../lib/mathLib";
 
-const Blob: React.FC<{ id: number }> = ({ id }) => {
+const Blob: React.FC<{ id: number | "player" }> = ({ id }) => {
   let [thisBlob, setThisBlob]: [blobType, Function] = useState({
-    ...useContext(GameContext).blobs[id],
+    ...(id === "player"
+      ? useContext(GameContext).playerBlob
+      : useContext(GameContext).blobs[id]),
   });
   let [positionOffset, setPositionOffset]: [[number, number], Function] =
     useState([...useContext(GameContext).positionOffset]);
@@ -18,7 +20,7 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
   let ySpeed: { current: number } = useRef(0);
 
   useEffect(() => {
-    if (thisBlob.playerControlled) {
+    if (id === "player") {
       GameContextValue.current.keyDownEventHandlers.push((key: string) => {
         switch (key.toUpperCase()) {
           case "W": {
@@ -81,10 +83,10 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
       }
     });
   }, []);
-  useEffect(() => {
-    GameContextValue.current.blobs[id] = thisBlob;
-  }, [thisBlob]);
-  if (thisBlob.playerControlled) {
+  if (id === "player") {
+    useEffect(() => {
+      GameContextValue.current.playerBlob = thisBlob;
+    }, [thisBlob]);
     useEffect(() => {
       GameContextValue.current.positionOffset = [
         thisBlob.position[0] -
@@ -95,6 +97,10 @@ const Blob: React.FC<{ id: number }> = ({ id }) => {
 
       GameContextValue.current.changePositionOffset(); //TODO: Prevent player-controlled blob from needlessly rerendering
     }, [thisBlob.position]);
+  } else {
+    useEffect(() => {
+      GameContextValue.current.blobs[id] = thisBlob;
+    }, [thisBlob]);
   }
 
   const fillColor: string = RGBtoString(thisBlob.color);
