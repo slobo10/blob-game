@@ -30,7 +30,7 @@ const Game: React.FC = () => {
     },
   ]);
   let [playerBlob, setPlayerBlob]: [blobType, Function] = useState({
-    position: [500, 250],
+    position: [1600, 1600],
     size: 50,
     color: randomColor(),
     id: "playerBlob",
