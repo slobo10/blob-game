@@ -108,11 +108,14 @@ const Blob: React.FC<{ id: number | "player" }> = ({ id }) => {
               ySpeed.current *= -1;
             }
           }
-
-          return {
-            ...oldBlob,
-            position: newPosition,
-          };
+          if (!Number.isNaN(newPosition[0]) && !Number.isNaN(newPosition[1])) {
+            return {
+              ...oldBlob,
+              position: newPosition,
+            };
+          } else {
+            return oldBlob;
+          }
         });
       }
     });
