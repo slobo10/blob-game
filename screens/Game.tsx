@@ -38,7 +38,7 @@ const Game: React.FC = () => {
   let [playerAlive, setPlayerState]: [boolean, Function] = useState(true);
 
   let GameContextValue: { current: GameContextType } = useRef({
-    gameSvgDimensions: [500, 500],
+    gameSvgDimensions: [1250, 750],
     gameDimensions: [3200, 3200],
     positionOffset: [0, 0],
     changePositionOffset: () => {
