@@ -5,8 +5,6 @@ import Game from "./screens/Game";
 import styles from "./constants/styles";
 
 const App: React.FC = () => {
-  console.log("App rendered!");
-
   return (
     <View style={styles.appContainer}>
       <Game />

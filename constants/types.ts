@@ -3,12 +3,17 @@ type blobType = {
   size: number;
   color: [number, number, number];
   id: string;
-  playerControlled?: boolean;
 };
 
 type GameContextType = {
   gameSvgDimensions: [number, number];
+  gameDimensions: [number, number];
+  positionOffset: [number, number];
+  changePositionOffset: Function;
+  changePositionOffsetFunctions: (() => void)[];
   blobs: blobType[];
+  playerBlob: blobType;
+  blobCount: number;
   changeNumberOfBlobs: Function;
   blobSpeed: number;
   keyDownEventHandlers: ((key: string) => void)[];
