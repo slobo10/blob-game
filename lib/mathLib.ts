@@ -109,9 +109,9 @@ const blobsAreTouching: (
     ) <= (FirstBlobIsBigger ? blobA.size - blobB.size : blobB.size - blobA.size)
   ) {
     if (FirstBlobIsBigger) {
-      firstIsEaten();
-    } else {
       secondIsEaten();
+    } else {
+      firstIsEaten();
     }
   }
 };

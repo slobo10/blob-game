@@ -112,8 +112,8 @@ const Game: React.FC = () => {
       for (i = 0; i < GameContextValue.current.blobs.length; i++) {
         if (playerAlive) {
           blobsAreTouching(
-            GameContextValue.current.blobs[i],
             GameContextValue.current.playerBlob,
+            GameContextValue.current.blobs[i],
             () => {
               GameContextValue.current.blobs[i].size = Math.sqrt(
                 GameContextValue.current.blobs[i].size ** 2 +
@@ -126,7 +126,7 @@ const Game: React.FC = () => {
                     GameContextValue.current.blobs[i].color[k],
                     GameContextValue.current.playerBlob.color[k],
                     GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.blobs[i].size
+                    GameContextValue.current.playerBlob.color[k]
                   )
                 );
               }
@@ -168,27 +168,7 @@ const Game: React.FC = () => {
             GameContextValue.current.blobs[i],
             GameContextValue.current.blobs[j],
             () => {
-              GameContextValue.current.blobs[i].size = Math.sqrt(
-                GameContextValue.current.blobs[i].size ** 2 +
-                  GameContextValue.current.blobs[j].size ** 2
-              );
-
-              for (k = 0; k < 3; k++) {
-                GameContextValue.current.blobs[j].color[k] = Math.round(
-                  average(
-                    GameContextValue.current.blobs[i].color[k],
-                    GameContextValue.current.blobs[j].color[k],
-                    GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.blobs[j].size
-                  )
-                );
-              }
-              GameContextValue.current.blobs.splice(j, 1);
-              GameContextValue.current.changeNumberOfBlobs();
-              j--;
-            },
-            () => {
-              GameContextValue.current.blobs[i].size = Math.sqrt(
+              GameContextValue.current.blobs[j].size = Math.sqrt(
                 GameContextValue.current.blobs[i].size ** 2 +
                   GameContextValue.current.blobs[j].size ** 2
               );
@@ -204,6 +184,26 @@ const Game: React.FC = () => {
                 );
               }
               GameContextValue.current.blobs.splice(i, 1);
+              GameContextValue.current.changeNumberOfBlobs();
+              j--;
+            },
+            () => {
+              GameContextValue.current.blobs[i].size = Math.sqrt(
+                GameContextValue.current.blobs[i].size ** 2 +
+                  GameContextValue.current.blobs[j].size ** 2
+              );
+
+              for (k = 0; k < 3; k++) {
+                GameContextValue.current.blobs[i].color[k] = Math.round(
+                  average(
+                    GameContextValue.current.blobs[i].color[k],
+                    GameContextValue.current.blobs[j].color[k],
+                    GameContextValue.current.blobs[i].size,
+                    GameContextValue.current.blobs[j].size
+                  )
+                );
+              }
+              GameContextValue.current.blobs.splice(j, 1);
               GameContextValue.current.changeNumberOfBlobs();
               j--;
             }
