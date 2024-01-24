@@ -183,7 +183,7 @@ const Game: React.FC = () => {
                   )
                 );
               }
-              GameContextValue.current.blobs.splice(i, 1);
+              GameContextValue.current.blobs.splice(j, 1);
               GameContextValue.current.changeNumberOfBlobs();
               j--;
             },
@@ -203,7 +203,7 @@ const Game: React.FC = () => {
                   )
                 );
               }
-              GameContextValue.current.blobs.splice(j, 1);
+              GameContextValue.current.blobs.splice(i, 1);
               GameContextValue.current.changeNumberOfBlobs();
               j--;
             }
