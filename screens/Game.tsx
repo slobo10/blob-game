@@ -126,7 +126,7 @@ const Game: React.FC = () => {
                     GameContextValue.current.blobs[i].color[k],
                     GameContextValue.current.playerBlob.color[k],
                     GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.playerBlob.color[k]
+                    GameContextValue.current.playerBlob.size
                   )
                 );
               }
@@ -147,7 +147,7 @@ const Game: React.FC = () => {
                     GameContextValue.current.blobs[i].color[k],
                     GameContextValue.current.playerBlob.color[k],
                     GameContextValue.current.blobs[i].size,
-                    GameContextValue.current.blobs[i].size
+                    GameContextValue.current.playerBlob.size
                   )
                 );
               }
