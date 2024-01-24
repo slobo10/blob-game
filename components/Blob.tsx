@@ -170,7 +170,7 @@ const Blob: React.FC<{ id: number | "player" }> = ({ id }) => {
     thisBlob.position[0] + thisBlob.size >
       GameContextValue.current.positionOffset[0] &&
     thisBlob.position[1] + thisBlob.size >
-      GameContextValue.current.positionOffset[0] &&
+      GameContextValue.current.positionOffset[1] &&
     thisBlob.position[0] - thisBlob.size <
       GameContextValue.current.positionOffset[0] +
         GameContextValue.current.gameSvgDimensions[0] &&
