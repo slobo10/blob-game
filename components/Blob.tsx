@@ -166,14 +166,29 @@ const Blob: React.FC<{ id: number | "player" }> = ({ id }) => {
 
   const fillColor: string = RGBtoString(thisBlob.color);
 
-  return (
-    <Circle
-      cx={thisBlob.position[0] - positionOffset[0]}
-      cy={thisBlob.position[1] - positionOffset[1]}
-      r={thisBlob.size}
-      fill={fillColor}
-    />
-  );
+  if (
+    thisBlob.position[0] + thisBlob.size >
+      GameContextValue.current.positionOffset[0] &&
+    thisBlob.position[1] + thisBlob.size >
+      GameContextValue.current.positionOffset[0] &&
+    thisBlob.position[0] - thisBlob.size <
+      GameContextValue.current.positionOffset[0] +
+        GameContextValue.current.gameSvgDimensions[0] &&
+    thisBlob.position[1] - thisBlob.size <
+      GameContextValue.current.positionOffset[1] +
+        GameContextValue.current.gameSvgDimensions[1]
+  ) {
+    return (
+      <Circle
+        cx={thisBlob.position[0] - positionOffset[0]}
+        cy={thisBlob.position[1] - positionOffset[1]}
+        r={thisBlob.size}
+        fill={fillColor}
+      />
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default Blob;
