@@ -59,7 +59,7 @@ const Game: React.FC = () => {
       setBlobs([...GameContextValue.current.blobs]);
       setPlayerBlob({ ...GameContextValue.current.playerBlob });
     },
-    blobSpeed: 10000,
+    blobSpeed: 20000,
     keyDownEventHandlers: [],
     keyUpEventHandlers: [],
     frameRate: 100,
