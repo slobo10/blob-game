@@ -15,20 +15,7 @@ let GameContext: Context<GameContextType | undefined> =
   createContext(undefined);
 
 const Game: React.FC = () => {
-  let [blobs, setBlobs]: [blobType[], Function] = useState([
-    {
-      position: [325, 250],
-      size: 60,
-      color: randomColor(),
-      id: "unmannedBlob0",
-    },
-    {
-      position: [325, 150],
-      size: 40,
-      color: randomColor(),
-      id: "unmannedBlob1",
-    },
-  ]);
+  let [blobs, setBlobs]: [blobType[], Function] = useState([]);
   let [playerBlob, setPlayerBlob]: [blobType, Function] = useState({
     position: [1600, 1600],
     size: 50,
@@ -55,6 +42,7 @@ const Game: React.FC = () => {
     changePositionOffsetFunctions: [],
     blobs: [...blobs],
     playerBlob: { ...playerBlob },
+    blobCount: 0,
     changeNumberOfBlobs: () => {
       setBlobs([...GameContextValue.current.blobs]);
       setPlayerBlob({ ...GameContextValue.current.playerBlob });
@@ -70,6 +58,21 @@ const Game: React.FC = () => {
   let i: number;
 
   useEffect(() => {
+    let i: number = 0;
+
+    for (i = 0; i < 250; i++) {
+      GameContextValue.current.blobs.push({
+        position: [
+          Math.random() * GameContextValue.current.gameDimensions[0],
+          Math.random() * GameContextValue.current.gameDimensions[1],
+        ],
+        size: Math.random() * 50,
+        color: randomColor(),
+        id: "unmannedBlob" + GameContextValue.current.blobCount,
+      });
+      GameContextValue.current.blobCount++;
+    }
+
     GameContextValue.current.positionOffset = [
       GameContextValue.current.playerBlob.position[0] -
         GameContextValue.current.gameSvgDimensions[0] / 2,
@@ -77,6 +80,7 @@ const Game: React.FC = () => {
         GameContextValue.current.gameSvgDimensions[1] / 2,
     ];
 
+    GameContextValue.current.changeNumberOfBlobs();
     GameContextValue.current.changePositionOffset(); //TODO: Prevent blobs from double rendering when game initializes
 
     document.addEventListener("keydown", ({ key }: { key: string }) => {

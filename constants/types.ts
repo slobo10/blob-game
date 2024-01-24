@@ -13,6 +13,7 @@ type GameContextType = {
   changePositionOffsetFunctions: (() => void)[];
   blobs: blobType[];
   playerBlob: blobType;
+  blobCount: number;
   changeNumberOfBlobs: Function;
   blobSpeed: number;
   keyDownEventHandlers: ((key: string) => void)[];
