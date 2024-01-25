@@ -13,6 +13,23 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 5,
   },
+  buttonText: {
+    fontSize: 500,
+  },
+  buttonContainerBase: {
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: 5,
+  },
+  buttonContainerClicked: {
+    backgroundColor: "#4b4b4b",
+  },
+  buttonContainerHovered: {
+    backgroundColor: "#8b8b8b",
+  },
+  buttonContainer: {
+    backgroundColor: "#aaaaaa",
+  },
 });
 
 export default styles;

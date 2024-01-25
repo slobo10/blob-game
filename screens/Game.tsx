@@ -10,6 +10,7 @@ import { GameContextType, blobType } from "../constants/types";
 import styles from "../constants/styles";
 import Blob from "../components/Blob";
 import { average, blobsAreTouching, randomColor } from "../lib/mathLib";
+import Background from "../components/Background";
 
 let GameContext: Context<GameContextType | undefined> =
   createContext(undefined);
@@ -247,6 +248,7 @@ const Game: React.FC = () => {
         width={GameContextValue.current.gameSvgDimensions[0]}
         height={GameContextValue.current.gameSvgDimensions[1]}
       >
+        <Background />
         {blobOutputA}
         {playerAlive && <Blob id="player" />}
         {blobOutputB}
