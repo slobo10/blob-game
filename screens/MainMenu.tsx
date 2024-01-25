@@ -1,10 +1,17 @@
 import React from "react";
-import { Text } from "react-native";
+import { Pressable, Text } from "react-native";
 
-const MainMenu: React.FC = () => {
+const MainMenu: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
   return (
     <>
       <Text>This is the main menu!</Text>
+      <Pressable
+        onPress={() => {
+          setScreen(1);
+        }}
+      >
+        <Text>Start</Text>
+      </Pressable>
     </>
   );
 };
