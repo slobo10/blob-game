@@ -20,6 +20,8 @@ type GameContextType = {
   keyUpEventHandlers: ((key: string) => void)[];
   frameRate: number;
   updateFunctions: (() => void)[];
+  setPlayingState: (value: number) => void;
+  updateIntervalId?: NodeJS.Timeout;
 };
 
 export { GameContextType, blobType };

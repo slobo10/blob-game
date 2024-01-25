@@ -10,11 +10,13 @@ import { GameContextType, blobType } from "../constants/types";
 import styles from "../constants/styles";
 import Blob from "../components/Blob";
 import { average, blobsAreTouching, randomColor } from "../lib/mathLib";
+import Button from "../components/Button";
+import PauseMenu from "../components/PauseMenu";
 
 let GameContext: Context<GameContextType | undefined> =
   createContext(undefined);
 
-const Game: React.FC = () => {
+const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
   let [blobs, setBlobs]: [blobType[], Function] = useState([]);
   let [playerBlob, setPlayerBlob]: [blobType, Function] = useState({
     position: [1600, 1600],
@@ -22,6 +24,7 @@ const Game: React.FC = () => {
     color: randomColor(),
     id: "playerBlob",
   });
+  let [paused, setPauseState] = useState(0);
   let [playerAlive, setPlayerState]: [boolean, Function] = useState(true);
 
   let GameContextValue: { current: GameContextType } = useRef({
@@ -52,6 +55,26 @@ const Game: React.FC = () => {
     keyUpEventHandlers: [],
     frameRate: 100,
     updateFunctions: [],
+    setPlayingState: (value) => {
+      if (value) {
+        setPauseState(0);
+
+        GameContextValue.current.updateIntervalId = setInterval(() => {
+          let i: number;
+
+          for (
+            i = 0;
+            i < GameContextValue.current.updateFunctions.length;
+            i++
+          ) {
+            GameContextValue.current.updateFunctions[i]();
+          }
+        }, 1000 / GameContextValue.current.frameRate);
+      } else {
+        setPauseState(1);
+        clearInterval(GameContextValue.current.updateIntervalId);
+      }
+    },
   });
 
   let blobOutputA: React.JSX.Element[] = [];
@@ -212,13 +235,7 @@ const Game: React.FC = () => {
       }
     });
 
-    setInterval(() => {
-      let i: number;
-
-      for (i = 0; i < GameContextValue.current.updateFunctions.length; i++) {
-        GameContextValue.current.updateFunctions[i]();
-      }
-    }, 1000 / GameContextValue.current.frameRate);
+    GameContextValue.current.setPlayingState(1);
   }, []);
 
   GameContextValue.current.blobs.sort((a, b) => a.size - b.size);
@@ -242,16 +259,33 @@ const Game: React.FC = () => {
 
   return (
     <GameContext.Provider value={GameContextValue.current}>
-      <Svg
-        style={styles.gameSvg}
-        width={GameContextValue.current.gameSvgDimensions[0]}
-        height={GameContextValue.current.gameSvgDimensions[1]}
-      >
-        <Background />
-        {blobOutputA}
-        {playerAlive && <Blob id="player" />}
-        {blobOutputB}
-      </Svg>
+      {!paused ? (
+        <>
+          <Svg
+            style={styles.gameSvg}
+            width={GameContextValue.current.gameSvgDimensions[0]}
+            height={GameContextValue.current.gameSvgDimensions[1]}
+          >
+            {blobOutputA}
+            {playerAlive && <Blob id="player" />}
+            {blobOutputB}
+          </Svg>
+          <Button
+            onPress={() => {
+              GameContextValue.current.setPlayingState(0);
+            }}
+          >
+            Pause
+          </Button>{" "}
+        </>
+      ) : (
+        <PauseMenu
+          setScreen={setScreen}
+          onResume={() => {
+            GameContextValue.current.setPlayingState(1);
+          }}
+        />
+      )}
     </GameContext.Provider>
   );
 };
