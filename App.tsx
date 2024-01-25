@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
   switch (screenState) {
     case 0: {
-      output = <MainMenu />;
+      output = <MainMenu setScreen={setScreenState} />;
       break;
     }
     case 1: {
