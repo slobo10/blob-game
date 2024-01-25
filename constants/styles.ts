@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
     borderWidth: 5,
   },
   buttonText: {
-    fontSize: 500,
+    fontSize: 50,
   },
   buttonContainerBase: {
     borderColor: "black",
     borderStyle: "solid",
-    borderWidth: 5,
+    borderWidth: 2,
   },
   buttonContainerClicked: {
     backgroundColor: "#4b4b4b",
