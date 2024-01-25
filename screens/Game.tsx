@@ -211,7 +211,7 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
               }
               GameContextValue.current.blobs.splice(i, 1);
               GameContextValue.current.changeNumberOfBlobs();
-              j--;
+              i--;
             },
             () => {
               GameContextValue.current.blobs[i].size = Math.sqrt(
