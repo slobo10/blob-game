@@ -16,7 +16,7 @@ const App: React.FC = () => {
       break;
     }
     case 1: {
-      output = <Game />;
+      output = <Game setScreen={setScreenState} />;
     }
   }
 
