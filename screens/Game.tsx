@@ -55,7 +55,10 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
     keyUpEventHandlers: [],
     frameRate: 100,
     updateFunctions: [],
-    setPlayingState: (value) => {
+  });
+  let blobCount: { current: number } = useRef(0);
+  const setPlayingState: { current: (value: number) => void } = useRef(
+    (value) => {
       if (value) {
         setPauseState(0);
 
@@ -74,8 +77,8 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
         setPauseState(1);
         clearInterval(GameContextValue.current.updateIntervalId);
       }
-    },
-  });
+    }
+  );
 
   let blobOutputA: React.JSX.Element[] = [];
   let blobOutputB: React.JSX.Element[] = [];
@@ -92,9 +95,9 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
         ],
         size: Math.random() * 50,
         color: randomColor(),
-        id: "unmannedBlob" + GameContextValue.current.blobCount,
+        id: "unmannedBlob" + blobCount.current,
       });
-      GameContextValue.current.blobCount++;
+      blobCount.current++;
     }
 
     GameContextValue.current.positionOffset = [
@@ -235,7 +238,7 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
       }
     });
 
-    GameContextValue.current.setPlayingState(1);
+    setPlayingState.current(1);
   }, []);
 
   GameContextValue.current.blobs.sort((a, b) => a.size - b.size);
@@ -272,7 +275,7 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
           </Svg>
           <Button
             onPress={() => {
-              GameContextValue.current.setPlayingState(0);
+              setPlayingState.current(0);
             }}
           >
             Pause
@@ -282,7 +285,7 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
         <PauseMenu
           setScreen={setScreen}
           onResume={() => {
-            GameContextValue.current.setPlayingState(1);
+            setPlayingState.current(1);
           }}
         />
       )}
