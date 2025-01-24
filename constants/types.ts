@@ -5,6 +5,10 @@ type blobType = {
   id: string;
 };
 
+type blobProps = {
+  id: number | "player";
+};
+
 type GameContextType = {
   gameSvgDimensions: [number, number];
   gameDimensions: [number, number];

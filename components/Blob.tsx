@@ -4,7 +4,7 @@ import { GameContextType, blobType } from "../constants/types";
 import { GameContext } from "../screens/Game";
 import { RGBtoString } from "../lib/mathLib";
 
-const Blob: React.FC<{ id: number | "player" }> = ({ id }) => {
+const Blob: React.FC<blobProps> = ({ id }) => {
   let [thisBlob, setThisBlob]: [blobType, Function] = useState({
     ...(id === "player"
       ? useContext(GameContext).playerBlob
