@@ -35,7 +35,7 @@ class GameData {
         blobs: [],
         playerBlob: {
           position: [1600, 1600],
-          size: 50,
+          size: 75,
           color: randomColor(),
           id: "playerBlob",
         },
@@ -58,13 +58,13 @@ class GameData {
 
     let i: number = 0;
 
-    for (i = 0; i < 300; i++) {
+    for (i = 0; i < 150; i++) {
       this.gameContextValue.blobs.push({
         position: [
           Math.random() * this.gameContextValue.gameDimensions[0],
           Math.random() * this.gameContextValue.gameDimensions[1],
         ],
-        size: Math.random() * 50,
+        size: Math.random() * 50 + 25,
         color: randomColor(),
         id: "unmannedBlob" + this.blobCount,
       });
