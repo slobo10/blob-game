@@ -12,6 +12,7 @@ import Blob from "../components/Blob";
 import Button from "../components/Button";
 import PauseMenu from "../components/PauseMenu";
 import GameData from "../lib/gameData";
+import Background from "../components/Background";
 
 let GameContext: Context<GameContextType | undefined> =
   createContext(undefined);
@@ -55,6 +56,7 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
               width={gameData.current.gameContextValue.gameSvgDimensions[0]}
               height={gameData.current.gameContextValue.gameSvgDimensions[1]}
             >
+              <Background />
               {blobOutputA}
               {playerAlive && <Blob id="player" />}
               {blobOutputB}
