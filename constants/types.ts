@@ -9,6 +9,8 @@ type blobProps = {
   id: number | "player";
 };
 
+type blobState = { thisBlob: blobType; positionOffset: [number, number] };
+
 type GameContextType = {
   gameSvgDimensions: [number, number];
   gameDimensions: [number, number];
@@ -26,4 +28,4 @@ type GameContextType = {
   updateIntervalId?: NodeJS.Timeout;
 };
 
-export { GameContextType, blobType };
+export { GameContextType, blobType, blobProps, blobState };

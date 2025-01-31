@@ -22,6 +22,8 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
   let [playerBlob, setPlayerBlob]: [blobType, Function] = useState();
   let [paused, setPauseState] = useState(0);
   let [playerAlive, setPlayerState]: [boolean, Function] = useState(true);
+  let [gameSvgDimensions, setGameSvgDimensions]: [[number, number], Function] =
+    useState([Dimensions.get("window").width, Dimensions.get("window").height]);
 
   let gameData: { current: GameData | undefined } = useRef();
 
@@ -30,6 +32,16 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
   let i: number;
 
   useEffect(() => {
+    Dimensions.addEventListener("change", () => {
+      setGameSvgDimensions([
+        Dimensions.get("window").width,
+        Dimensions.get("window").height,
+      ]);
+      gameData.current.gameContextValue.gameSvgDimensions = [
+        Dimensions.get("window").width,
+        Dimensions.get("window").height,
+      ];
+    });
     gameData.current = new GameData(
       0,
       setBlobs,
@@ -61,13 +73,14 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
               {playerAlive && <Blob id="player" />}
               {blobOutputB}
             </Svg>
-            <Button
+            {/* <Button
               onPress={() => {
                 gameData.current.setPlayingState(false);
               }}
             >
               Pause
-            </Button>{" "}
+            </Button>{" "} */}
+            {/* </Pressable> */}
           </>
         ) : (
           <PauseMenu

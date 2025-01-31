@@ -1,3 +1,4 @@
+import { Dimensions } from "react-native";
 import { GameContextType } from "../constants/types";
 import { average, blobsAreTouching, randomColor } from "./mathLib";
 
@@ -17,7 +18,10 @@ class GameData {
     this.setPauseState = setPauseState;
     this.gameContextValue = {
       ...{
-        gameSvgDimensions: [1250, 750],
+        gameSvgDimensions: [
+          Dimensions.get("window").width,
+          Dimensions.get("window").height,
+        ],
         gameDimensions: [3200, 3200],
         positionOffset: [0, 0],
         changePositionOffset: () => {

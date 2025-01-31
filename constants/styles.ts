@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
   },
   gameSvg: {
     backgroundColor: "#008000",
-    borderStyle: "solid",
-    borderColor: "black",
-    borderWidth: 5,
+    // borderStyle: "solid",
+    // borderColor: "black",
+    // borderWidth: 5,
   },
   menuContainer: {
     justifyContent: "center",
