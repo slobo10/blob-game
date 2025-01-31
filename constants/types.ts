@@ -1,3 +1,5 @@
+import { GestureResponderEvent } from "react-native";
+
 type blobType = {
   position: [number, number];
   size: number;
@@ -23,6 +25,7 @@ type GameContextType = {
   blobSpeed: number;
   keyDownEventHandlers: ((key: string) => void)[];
   keyUpEventHandlers: ((key: string) => void)[];
+  pressEventHandlers: ((event: GestureResponderEvent) => void)[];
   frameRate: number;
   updateFunctions: (() => void)[];
   updateIntervalId?: NodeJS.Timeout;

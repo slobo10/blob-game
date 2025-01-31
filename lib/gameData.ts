@@ -15,6 +15,7 @@ class GameData {
     setPlayerState: Function,
     setPauseState: Function
   ) {
+    console.log(Dimensions);
     this.setPauseState = setPauseState;
     this.gameContextValue = {
       ...{
@@ -53,6 +54,7 @@ class GameData {
         blobSpeed: 20000,
         keyDownEventHandlers: [],
         keyUpEventHandlers: [],
+        pressEventHandlers: [],
         frameRate: 100,
         updateFunctions: [],
       },

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Circle } from "react-native-svg";
-import { GameContextType, blobType } from "../constants/types";
+import { GameContextType, blobProps, blobType } from "../constants/types";
 import { GameContext } from "../screens/Game";
 import { RGBtoString } from "../lib/mathLib";
+import { GestureResponderEvent } from "react-native";
 
 const Blob: React.FC<blobProps> = ({ id }) => {
   let [thisBlob, setThisBlob]: [blobType, Function] = useState({
@@ -50,6 +51,17 @@ const Blob: React.FC<blobProps> = ({ id }) => {
           xSpeed.current = 0;
         }
       });
+
+      GameContextValue.current.pressEventHandlers.push(
+        (event: GestureResponderEvent) => {
+          xSpeed.current =
+            event.nativeEvent.locationX -
+            GameContextValue.current.gameSvgDimensions[0] / 2;
+          ySpeed.current =
+            event.nativeEvent.locationY -
+            GameContextValue.current.gameSvgDimensions[1] / 2;
+        }
+      );
     } else {
       GameContextValue.current.updateFunctions.push(() => {
         xSpeed.current += Math.random() * 2 - 1;
