@@ -53,12 +53,32 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
   }, []);
 
   if (gameData.current) {
-    for (i = 0; i < blobs.length && blobs[i].size < playerBlob.size; i++) {
-      blobOutputA.push(<Blob key={blobs[i].id} id={i} />);
+    clearInterval(gameData.current.gameContextValue.updateIntervalId);
+
+    let blobsToRender: blobType[] = [...blobs];
+
+    for (
+      i = 0;
+      i < blobsToRender.length && blobsToRender[i].size < playerBlob.size;
+      i++
+    ) {
+      blobOutputA.push(<Blob key={blobsToRender[i].id} id={i} />);
     }
-    for (; i < blobs.length; i++) {
-      blobOutputB.push(<Blob key={blobs[i].id} id={i} />);
+    for (; i < blobsToRender.length; i++) {
+      blobOutputB.push(<Blob key={blobsToRender[i].id} id={i} />);
     }
+
+    gameData.current.gameContextValue.updateIntervalId = setInterval(() => {
+      let i: number;
+
+      for (
+        i = 0;
+        i < gameData.current.gameContextValue.updateFunctions.length;
+        i++
+      ) {
+        gameData.current.gameContextValue.updateFunctions[i]();
+      }
+    }, 1000 / gameData.current.gameContextValue.frameRate);
 
     return (
       <GameContext.Provider value={gameData.current.gameContextValue}>
