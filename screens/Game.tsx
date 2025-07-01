@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Svg, Text } from "react-native-svg";
+import { Rect, Svg, Text } from "react-native-svg";
 import { GameContextType, blobType } from "../constants/types";
 import styles from "../constants/styles";
 import Blob from "../components/Blob";
@@ -97,6 +97,15 @@ const Game: React.FC<{ setScreen: Function }> = ({ setScreen }) => {
                   {gameData.current.gameContextValue.blobs.length +
                     (playerAlive ? 1 : 0)}
                 </Text>
+                <Rect
+                  x={gameSvgDimensions[0] - 50}
+                  y={0}
+                  width={50}
+                  height={50}
+                  onPress={() => {
+                    gameData.current.setPlayingState(false);
+                  }}
+                />
               </Svg>
               {/* <Button
               onPress={() => {
