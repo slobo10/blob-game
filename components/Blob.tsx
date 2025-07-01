@@ -56,10 +56,12 @@ const Blob: React.FC<blobProps> = ({ id }) => {
         (event: GestureResponderEvent) => {
           xSpeed.current =
             event.nativeEvent.locationX -
-            GameContextValue.current.gameSvgDimensions[0] / 2;
+            (GameContextValue.current.playerBlob.position[0] -
+              GameContextValue.current.positionOffset[0]);
           ySpeed.current =
             event.nativeEvent.locationY -
-            GameContextValue.current.gameSvgDimensions[1] / 2;
+            (GameContextValue.current.playerBlob.position[1] -
+              GameContextValue.current.positionOffset[1]);
         }
       );
     } else {
@@ -91,34 +93,34 @@ const Blob: React.FC<blobProps> = ({ id }) => {
 
           if (newPosition[0] < oldBlob.size) {
             newPosition[0] = oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               xSpeed.current *= -1;
-            }
+            // }
           } else if (
             newPosition[0] >
             GameContextValue.current.gameDimensions[0] - oldBlob.size
           ) {
             newPosition[0] =
               GameContextValue.current.gameDimensions[0] - oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               xSpeed.current *= -1;
-            }
+            // }
           }
 
           if (newPosition[1] < oldBlob.size) {
             newPosition[1] = oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               ySpeed.current *= -1;
-            }
+            // }
           } else if (
             newPosition[1] >
             GameContextValue.current.gameDimensions[1] - oldBlob.size
           ) {
             newPosition[1] =
               GameContextValue.current.gameDimensions[1] - oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               ySpeed.current *= -1;
-            }
+            // }
           }
           if (!Number.isNaN(newPosition[0]) && !Number.isNaN(newPosition[1])) {
             return {
