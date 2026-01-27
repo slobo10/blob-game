@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Circle } from "react-native-svg";
-import { GameContextType, blobType } from "../constants/types";
+import { GameContextType, blobProps, blobType } from "../constants/types";
 import { GameContext } from "../screens/Game";
 import { RGBtoString } from "../lib/mathLib";
+import { GestureResponderEvent } from "react-native";
 
 const Blob: React.FC<blobProps> = ({ id }) => {
   let [thisBlob, setThisBlob]: [blobType, Function] = useState({
@@ -50,6 +51,19 @@ const Blob: React.FC<blobProps> = ({ id }) => {
           xSpeed.current = 0;
         }
       });
+
+      GameContextValue.current.pressEventHandlers.push(
+        (event: GestureResponderEvent) => {
+          xSpeed.current =
+            event.nativeEvent.locationX -
+            (GameContextValue.current.playerBlob.position[0] -
+              GameContextValue.current.positionOffset[0]);
+          ySpeed.current =
+            event.nativeEvent.locationY -
+            (GameContextValue.current.playerBlob.position[1] -
+              GameContextValue.current.positionOffset[1]);
+        }
+      );
     } else {
       GameContextValue.current.updateFunctions.push(() => {
         xSpeed.current += Math.random() * 2 - 1;
@@ -79,34 +93,34 @@ const Blob: React.FC<blobProps> = ({ id }) => {
 
           if (newPosition[0] < oldBlob.size) {
             newPosition[0] = oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               xSpeed.current *= -1;
-            }
+            // }
           } else if (
             newPosition[0] >
             GameContextValue.current.gameDimensions[0] - oldBlob.size
           ) {
             newPosition[0] =
               GameContextValue.current.gameDimensions[0] - oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               xSpeed.current *= -1;
-            }
+            // }
           }
 
           if (newPosition[1] < oldBlob.size) {
             newPosition[1] = oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               ySpeed.current *= -1;
-            }
+            // }
           } else if (
             newPosition[1] >
             GameContextValue.current.gameDimensions[1] - oldBlob.size
           ) {
             newPosition[1] =
               GameContextValue.current.gameDimensions[1] - oldBlob.size;
-            if (id !== "player") {
+            // if (id !== "player") {
               ySpeed.current *= -1;
-            }
+            // }
           }
           if (!Number.isNaN(newPosition[0]) && !Number.isNaN(newPosition[1])) {
             return {

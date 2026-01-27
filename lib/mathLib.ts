@@ -98,6 +98,7 @@ const blobsAreTouching: (
   firstIsEaten: () => void,
   secondIsEaten: () => void
 ) => void = (blobA, blobB, firstIsEaten, secondIsEaten) => {
+  if (blobA != undefined && blobB != undefined) {
   let FirstBlobIsBigger = blobA.size > blobB.size;
 
   let k: number;
@@ -106,13 +107,15 @@ const blobsAreTouching: (
     Math.sqrt(
       (blobA.position[0] - blobB.position[0]) ** 2 +
         (blobA.position[1] - blobB.position[1]) ** 2
-    ) <= (FirstBlobIsBigger ? blobA.size - blobB.size : blobB.size - blobA.size)
+      ) <=
+      (FirstBlobIsBigger ? blobA.size - blobB.size : blobB.size - blobA.size)
   ) {
     if (FirstBlobIsBigger) {
       secondIsEaten();
     } else {
       firstIsEaten();
     }
+  }
   }
 };
 
